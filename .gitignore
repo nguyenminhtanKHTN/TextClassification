@@ -19,3 +19,5 @@ logs/
 
 # Jupyter Notebooks
 .ipynb_checkpoints/
+
+embedding.py
