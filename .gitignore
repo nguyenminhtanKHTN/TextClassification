@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+venv/
+env/
+
+# Data
+data/
+data/*.csv # hoặc các định dạng dữ liệu khác
+data/raw/
+models/
+embeddings/
+
+# Logs
+logs/
+*.log
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
