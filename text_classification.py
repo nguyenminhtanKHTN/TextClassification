@@ -1,31 +1,10 @@
-# import tensorflow as tf
-# from tensorflow.keras.datasets import imdb
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 tqdm.pandas()
-
-from collections import Counter
-
-import re
-import nltk
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer, WordNetLemmatizer
-from preprocess import preprocess_text
-from eda import *
-
-# def load_imdb_from_keras():
-#     vocab_size = 10000
-#     return imdb.load_data(num_words=vocab_size)
-stopwords = set(stopwords.words('english'))
-lemmatizer = WordNetLemmatizer()
-
+from embedding import bow_vectorizer
 def load_imdb_from_csv(filepath):
     try:
         return pd.read_csv(filepath)
@@ -50,4 +29,12 @@ if __name__ == "__main__":
     print('*'*100)
 
     # processed_imdb_eda(processed_data_df)
+
+    X_bow, vectorizer_bow = bow_vectorizer(processed_data_df['processed_review'].to_list())
+
+    print(list(vectorizer_bow.vocabulary_.items())[:10])
+
+    print(X_bow[0].toarray())
+
+
 
