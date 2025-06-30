@@ -1,6 +1,6 @@
 import pandas as pd
 from preprocess import preprocess_text
-from embedding import bow_vectorizer
+from embedding import bow_vectorizer, tf_idf_vectorizer
 from sklearn.model_selection import train_test_split
 
 def load_imdb_from_csv(filepath):
@@ -26,6 +26,8 @@ def data_preparation(data_filepath, processed = False, _vectorizer = 'bow', test
     #Vectorize text
     if _vectorizer == 'bow':
         X, vectorizer = bow_vectorizer(data_df['processed_review'].to_list())
+    elif _vectorizer == 'tfidf':
+        X, vectorizer = tf_idf_vectorizer(data_df['processed_review'].to_list())
     labels = data_df['labels']
 
     #Split data
