@@ -1,53 +1,18 @@
-# import tensorflow as tf
-# from tensorflow.keras.datasets import imdb
+
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from tqdm import tqdm
-tqdm.pandas()
-
-from collections import Counter
-
-import re
-import nltk
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer, WordNetLemmatizer
-from preprocess import preprocess_text
-from eda import *
-
-# def load_imdb_from_keras():
-#     vocab_size = 10000
-#     return imdb.load_data(num_words=vocab_size)
-stopwords = set(stopwords.words('english'))
-lemmatizer = WordNetLemmatizer()
-
-def load_imdb_from_csv(filepath):
-    try:
-        return pd.read_csv(filepath)
-    except FileNotFoundError:
-        print('File not found')
-        return None
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
+from data import data_preparation
+from embedding import bow_vectorizer
+from sklearn.model_selection import train_test_split
 
 if __name__ == "__main__":
-    # data_df = load_imdb_from_csv('imdb.csv)
-    # imdb_eda(data_df)
-    # data_df['processed_review'] = data_df['review'].progress_apply(preprocess_text)
+    #Load data
+    X_train_bow, X_val_bow, X_test_bow, y_train, y_val, y_test = data_preparation('data/processed_imdb.csv', 
+                                                                                  processed=True)
+    
+    X_train_tfidf, X_val_tfidf, X_test_tfidf, _, _, _ = data_preparation('data/processed_imdb.csv', 
+                                                                         processed=True, 
+                                                                         _vectorizer = 'tfidf')
+    # print(X_train.shape, X_val.shape, X_test.shape)
 
-    # output_csv_dir = 'processed_imdb.csv'
-    # data_df.to_csv(output_csv_dir, index=False, encoding='utf-8')
-
-    processed_data_df = load_imdb_from_csv('data/processed_imdb.csv')
-    print(processed_data_df.head())
-
-    print('*'*100)
-
-    # processed_imdb_eda(processed_data_df)
-
+    print('BoW: ', X_train_bow[0])
+    print('Tf-idf: ', X_train_tfidf[0])
